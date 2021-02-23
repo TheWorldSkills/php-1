@@ -4,7 +4,7 @@
         $read = $pdo->query("select * from member where userId = '{$_POST['userId']}' and userPwd = '{$_POST['userPwd']}'")->fetch();
         if($read){
             $_SESSION['member'] = $read;
-            alert("성공","/page/index.php");
+            alert("성공","/");
         } else{
             alert("실패");
         }

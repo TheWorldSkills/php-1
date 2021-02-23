@@ -47,7 +47,7 @@
     function alert($msg=null, $url=null){
         echo "<script>";
         echo $msg ? "alert('{$msg}');" : "";
-        echo $url ? "documment.location.replace('{$url}')" : "history.back()";
+        echo $url ? "document.location.href='{$url}'" : "history.back()";
         echo "</script>";
         exit;
     } 

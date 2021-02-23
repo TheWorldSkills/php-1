@@ -2,7 +2,7 @@
     switch ($midx){
         case 'logout':
             session_destroy();
-            alert('logout');
+            alert('logout', '/');
             break;
     }
 ?>
