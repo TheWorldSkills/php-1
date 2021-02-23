@@ -1,15 +1,23 @@
 <?php
-    include_once('./lib/lib.php');  
-
+    include_once('./lib/lib.php'); 
+    // 현재 유저 idx 를 저장
+    $mIdx = $member->idx;
+    print_r($mIdx);
+    // 로그인 안하고는 접근 못하게.
     if(!isset($_SESSION['member'])){
         alert("로그인 ㄱ", "/page/login");
     }
     else if(isset($_SESSION['member'])){
         if(isset($_POST['menu_make'])){
             print_r($_POST['content']);
-            $make = $pdo->query("insert into menu set content='{$_POST['content']}'");
+            $make = $pdo->query("insert into menu set content='{$_POST['content']}', mIdx='{$mIdx}'");
             print_r($make);
-        }
+        };
+
+        if(isset($_POST['board_make'])){
+            print_r($_POST['boardContent']);
+            $make = $pdo->query("insert into board set content='{$_POST['boardContent']}'");
+        };
     }
 ?>
 <!-- contents -->
@@ -60,12 +68,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php
+                                            // menu의 mIdx가 현재 userIdx 인 것.
+                                                $list = $pdo->query("select * from menu where mIdx='{$mIdx}'")->fetchAll();
+                                                foreach($list as $key => $v){
+                                                    print_r($v);
+                                            ?>
                                             <tr>
                                                 <td>
-                                                    2
+                                                    <?php echo $key+1 ?>
                                                 </td>
                                                 <td>
-                                                    메뉴이름2
+                                                    <?php echo $v->content ?>
                                                 </td>
                                                 <td>
                                                     <select class="form-control input-sm">
@@ -80,26 +94,7 @@
                                                     <button class="btn btn-default btn-xs" type="button">메뉴삭제</button>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>
-                                                    메뉴이름1
-                                                </td>
-                                                <td>
-                                                    <select class="form-control input-sm">
-                                                        <option>선택</option>
-                                                        <option>board3</option>
-                                                        <option>board2</option>
-                                                        <option>board1</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-default btn-xs" type="button">게시판등록</button>
-                                                    <button class="btn btn-default btn-xs" type="button">메뉴삭제</button>
-                                                </td>
-                                            </tr>
+                                            <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -108,11 +103,12 @@
                             <div class="margin-bottom">
                                 <h2 class="page-header">게시판등록</h2>
                                 <div class="testimonial">
-                                    <form class="menuwrite">
+                                    <form class="menuwrite" action="" method="post">
+                                    <input type="hidden" name="board_make" value="">
                                         <label>게시판아이디
                                             <span class="color-red">*</span>
                                         </label>
-                                        <input class="form-control margin-bottom-20" type="text">
+                                        <input class="form-control margin-bottom-20" type="text" name="boardContent">
                                         <div class="col-lg-12 text-right">
                                             <button class="btn btn-primary btn-sm" type="submit">게시판등록</button>
                                         </div>
