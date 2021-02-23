@@ -4,9 +4,16 @@
         $read = $pdo->query("select * from member where userId = '{$_POST['userId']}' and userPwd = '{$_POST['userPwd']}'")->fetch();
         if($read){
             $_SESSION['member'] = $read;
-            alert("성공");
+            alert("성공","/page/index.php");
         } else{
             alert("실패");
+        }
+    }
+    if($member){
+        $prevPage = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
+        if($prevPage != '/'){ 
+            echo "<script>alert('허용되지 않는 잘못된 접근입니다.');</script>"; 
+            return; 
         }
     }
 ?>    
