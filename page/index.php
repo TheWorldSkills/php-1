@@ -37,12 +37,15 @@
         <div class="container">
             <div class="row">
                 <div class="pull-left">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="/">
                     	<h1><img src="images/logo.png" alt="logo"></h1>
                     </a>
                 </div>
                 <div class="pull-right">
                     <ul class="navi">
+                    <?php 
+                        if(!$member) {
+                    ?>
                         <li>
                             <a href="/page/login" title="로그인">
                                 로그인
@@ -53,6 +56,11 @@
                                 회원가입
                             </a>
                         </li>
+                        <?php } else{ ?>
+                        <li>
+                            <a href="/action/logout" title="로그아웃">로그아웃</a>
+                        </li>
+                        <?php } ?>
                         <li>
                             <a href="/page/myblog" title="내 블로그" target="_blank">
                                 내 블로그
