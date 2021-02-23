@@ -2,21 +2,20 @@
     include_once('./lib/lib.php'); 
     // 현재 유저 idx 를 저장
     $mIdx = $member->idx;
-    print_r($mIdx);
+    // print_r($mIdx);
     // 로그인 안하고는 접근 못하게.
     if(!isset($_SESSION['member'])){
-        alert("로그인 ㄱ", "/page/login");
+        alert("로그인하고와 ㅅㅂ", "/page/login");
     }
     else if(isset($_SESSION['member'])){
         if(isset($_POST['menu_make'])){
-            print_r($_POST['content']);
+            // print_r($_POST['content']);
             $make = $pdo->query("insert into menu set content='{$_POST['content']}', mIdx='{$mIdx}'");
-            print_r($make);
+            // print_r($make);
         };
-
         if(isset($_POST['board_make'])){
-            print_r($_POST['boardContent']);
-            $make = $pdo->query("insert into board set content='{$_POST['boardContent']}'");
+            // print_r($_POST['boardContent']);
+            $make = $pdo->query("insert into board set content='{$_POST['boardContent']}', mIdx='{$mIdx}'");
         };
     }
 ?>
@@ -72,7 +71,7 @@
                                             // menu의 mIdx가 현재 userIdx 인 것.
                                                 $list = $pdo->query("select * from menu where mIdx='{$mIdx}'")->fetchAll();
                                                 foreach($list as $key => $v){
-                                                    print_r($v);
+                                                    // print_r($v);
                                             ?>
                                             <tr>
                                                 <td>
@@ -83,10 +82,14 @@
                                                 </td>
                                                 <td>
                                                     <select class="form-control input-sm">
-                                                        <option>선택</option>
-                                                        <option>board3</option>
-                                                        <option>board2</option>
-                                                        <option>board1</option>
+                                                    <?php 
+                                                        $bList = $pdo->query("select * from board where mIdx='{$mIdx}'")->fetchAll();
+                                                        foreach($bList as $key => $v){
+                                                            print_r($v);
+                                                        
+                                                    ?>
+                                                        <option><?php echo $v->content ?></option>
+                                                        <?php }?>
                                                     </select>
                                                 </td>
                                                 <td>
@@ -134,39 +137,23 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php 
+                                                foreach($bList as $key => $v){
+                                                // print_r($v);
+                                            ?>
                                             <tr>
                                                 <td>
-                                                    3
+                                                    <?php echo $key+1 ?>
                                                 </td>
                                                 <td>
-                                                    board3
+                                                    <?php echo $v->content ?>
                                                 </td>                                                
                                                 <td>
-                                                    <button class="btn btn-default btn-xs" type="button">게시판삭제</button>
+                                                    <input type="hidden" name="board_del" value="">
+                                                    <button class="btn btn-default btn-xs" type="button" name="board_del_btn">게시판삭제</button>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    2
-                                                </td>
-                                                <td>
-                                                    board2
-                                                </td>                                                
-                                                <td>
-                                                    <button class="btn btn-default btn-xs" type="button">게시판삭제</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>
-                                                    board1
-                                                </td>                                                
-                                                <td>
-                                                    <button class="btn btn-default btn-xs" type="button">게시판삭제</button>
-                                                </td>
-                                            </tr>
+                                            <?php } ?>      
                                         </tbody>
                                     </table>
                                 </div>
