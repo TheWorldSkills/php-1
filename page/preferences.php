@@ -11,12 +11,11 @@
         if(isset($_POST['menu_make'])){
             // print_r($_POST['content']);
             $make = $pdo->query("insert into menu set content='{$_POST['content']}', mIdx='{$mIdx}'");
-            // print_r($make);
-        };
+        }
         if(isset($_POST['board_make'])){
             // print_r($_POST['boardContent']);
             $make = $pdo->query("insert into board set content='{$_POST['boardContent']}', mIdx='{$mIdx}'");
-        };
+        }
     }
 ?>
 <!-- contents -->
@@ -70,7 +69,7 @@
                                             <?php
                                             // menu의 mIdx가 현재 userIdx 인 것.
                                                 $list = $pdo->query("select * from menu where mIdx='{$mIdx}'")->fetchAll();
-                                                foreach($list as $key => $v){
+                                                foreach($list as $key => $val){
                                                     // print_r($v);
                                             ?>
                                             <tr>
@@ -78,22 +77,21 @@
                                                     <?php echo $key+1 ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo $v->content ?>
+                                                    <?php echo $val->content ?>
                                                 </td>
                                                 <td>
                                                     <select class="form-control input-sm">
+                                                        <option value="">선택</option>
                                                     <?php 
                                                         $bList = $pdo->query("select * from board where mIdx='{$mIdx}'")->fetchAll();
                                                         foreach($bList as $key => $v){
-                                                            print_r($v);
-                                                        
                                                     ?>
-                                                        <option><?php echo $v->content ?></option>
+                                                        <option value="<?php echo $v->boardIdx ?>"><?php echo $v->content ?></option>
                                                         <?php }?>
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <button class="btn btn-default btn-xs" type="button">게시판등록</button>
+                                                    <button class="btn btn-default btn-xs on_click" type="button" data-idx="<?= $val->menuIdx ?> ">게시판등록</button>
                                                     <button class="btn btn-default btn-xs" type="button">메뉴삭제</button>
                                                 </td>
                                             </tr>
@@ -139,7 +137,6 @@
                                         <tbody>
                                             <?php 
                                                 foreach($bList as $key => $v){
-                                                // print_r($v);
                                             ?>
                                             <tr>
                                                 <td>
@@ -214,7 +211,6 @@
 
 
                         </div>
-                    </div>
                     <!-- content inner -->
 
                 </div>

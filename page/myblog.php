@@ -1,3 +1,10 @@
+<?php
+    include_once('./lib/lib.php');
+    if(!isset($_SESSION['member'])){
+        alert("로그인하고와 ㅅㅂ", "/page/login");
+    }
+    $mIdx = $member->idx;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,12 +83,12 @@
                                         <div class="sidebar-item categories">
                                             <h3>블로그 메뉴</h3>
                                             <ul class="nav navbar-stacked">
-                                                <li class="active"><a href="#">PHP<span class="pull-right">(3)</span></a></li>
-                                                <li><a href="#">JavaScript<span class="pull-right">(8)</span></a></li>
-                                                <li><a href="#">JSP<span class="pull-right">(4)</span></a></li>
-                                                <li><a href="#">node.js<span class="pull-right">(9)</span></a></li>
-                                                <li><a href="#">CSS<span class="pull-right">(3)</span></a></li>
-                                                <li><a href="#">HTML5<span class="pull-right">(4)</span></a></li>
+                                                <?php
+                                                    $blog_list = $pdo->query("select * from menu where mIdx='{$mIdx}'")->fetchAll();
+                                                    foreach ($blog_list as $key => $v){
+                                                ?>
+                                                <li class="active"><a href="#"><?php echo $v->content ?><span class="pull-right">(3)</span></a></li>
+                                                <?php }?>
                                             </ul>
                                         </div>
                                     </div>
