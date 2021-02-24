@@ -62,7 +62,7 @@
                         </li>
                         <?php } ?>
                         <li>
-                            <a href="/page/myblog" title="내 블로그" target="_blank">
+                            <a href="/<?php echo $member->userId ?>" title="내 블로그" target="_blank">
                                 내 블로그
                             </a>
                         </li>

@@ -58,4 +58,10 @@
         include("./lib/action.php");
         exit;
     }
+
+    $user = $pdo->query("select * from member where userId = '{$pagemode}'")->fetch();
+    if($user){
+        include "./page/myblog.php";
+        exit;
+    }
 ?>

@@ -86,7 +86,7 @@
                                                         $bList = $pdo->query("select * from board where mIdx='{$mIdx}'")->fetchAll();
                                                         foreach($bList as $key => $v){
                                                     ?>
-                                                        <option value="<?php echo $v->boardIdx ?>"><?php echo $v->content ?></option>
+                                                        <option <?php echo $v->boardIdx == $val->mBoard ? 'selected' : ''; ?> value="<?php echo $v->boardIdx ?>"><?php echo $v->content ?></option>
                                                         <?php }?>
                                                     </select>
                                                 </td>
